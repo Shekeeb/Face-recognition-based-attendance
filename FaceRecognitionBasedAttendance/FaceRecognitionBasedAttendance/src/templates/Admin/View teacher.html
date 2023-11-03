@@ -1,0 +1,49 @@
+{% extends 'adminindex.html' %}
+{% block body %}
+<form action="listteacher" method="post">
+<table width="307" border="1">
+  <tr>
+    <td width="88">Department</td>
+    <td width="99"><label>
+      <select name="select">
+        {% for i in data1 %}
+      <option value="{{i[0]}}">{{i[1]}}</option>
+      {% endfor %}
+      </select>
+    </label></td>
+    <td width="98">&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="3"><label>
+      <div align="center">
+        <input type="submit" name="Submit" value="Search" />
+        </div>
+    </label></td>
+    </tr>
+</table>
+</form>
+<form action="addteacher" method="post">
+<table width="307" border="1">	
+  <tr>
+    <td>Teacher</td>
+    <td>Contact No </td>
+    <td>Mail</td>
+    <td></td>
+  </tr>
+  {% for i in data %}
+  <tr>
+    <td>{{i[1]}}{{i[2]}}&nbsp;</td>
+    <td>{{i[9]}}</td>
+    <td>{{i[10]}}</td>
+    <td><p align="right"><a href="deleteteacher?id={{i[0]}}">Delete</a></p></td>
+  </tr>
+  {% endfor %}
+  <tr>
+    <td colspan="3"><div align="center">
+      <input type="submit" name="Submit2" value="Add" />
+    </div></td>
+    </tr>
+</table>
+
+</form>
+{% endblock %}

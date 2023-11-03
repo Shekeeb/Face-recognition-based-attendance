@@ -1,0 +1,71 @@
+{% extends 'staffindex.html' %}
+{% block body %}
+<form action="addinternalmarksearch" method="post">
+<div align="center">
+  <table width="472" height="115" border="1">
+    <tr>
+      <td width="83" height="35">COURSE</td>
+        <td width="245"><label>
+          <select name="select">
+        {% for i in data %}
+        <option value="{{i[0]}}" {% if i[0]|string == c %} selected {% endif %}>{{i[1]}}</option>
+        {% endfor %}
+      </select>
+        </label></td>
+        <td width="55">SEM</td>
+        <td width="61"><label>
+          <select name="select2">
+            <option {% if "1" == s %} selected {% endif %}>1</option>
+            <option {% if "2" == s %} selected {% endif %}>2</option>
+            <option {% if "3" == s %} selected {% endif %}>3</option>
+            <option {% if "4" == s %} selected {% endif %}>4</option>
+            <option {% if "5" == s %} selected {% endif %}>5</option>
+            <option {% if "6" == s %} selected {% endif %}>6</option>
+          </select>
+        </label></td>
+      </tr>
+    <tr>
+      <td height="34" colspan="4"><div align="center">
+        <label>
+          <input type="submit" name="Submit" value="Search" />
+          </label>
+        </div></td>
+      </tr>
+    <tr>
+      <td height="36">SUBJECT</td>
+        <td colspan="3"><label>
+          <select name="select3">
+            <option value="">Select</option>
+            {% for i in res1 %}
+            <option value="{{i[0]}}">{{i[3]}}</option>
+            {% endfor %}
+          </select>
+        </label></td>
+      </tr>
+  </table>
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+  <table width="473" border="1">
+    <tr>
+      <td width="228"><div align="center">STUDENT</div></td>
+        <td width="229"><div align="center">MARK</div></td>
+      </tr>
+    {% for i in res %}
+    <tr>
+      <td><div align="center">{{i[2]}} {{i[3]}}</div></td>
+        <td><div align="center">
+          <input type="text" name="{{i[1]}}"  />
+    </div></td>
+      </tr>
+    {% endfor %}
+    <tr>
+      <td colspan="2"><div align="center">
+        <input type="submit" name="Submit" value="Register" />
+    </div></td>
+      </tr>
+  </table>
+</div>
+<p align="center">&nbsp;</p>
+</form>
+{% endblock %}

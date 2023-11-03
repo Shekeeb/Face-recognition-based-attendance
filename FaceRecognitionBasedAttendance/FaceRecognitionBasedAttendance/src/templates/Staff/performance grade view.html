@@ -1,0 +1,17 @@
+{% extends 'staffindex.html' %}
+{% block body %}
+<div align="center">
+  <table width="260" border="1">
+    <tr>
+      <td width="106"><div align="center">Subject</div></td>
+      <td width="138"><div align="center">Performance Grade </div></td>
+    </tr>
+    {% for i in val %}
+    <tr>
+      <td>{{i[0]}}&nbsp;</td>
+      <td>{{i[1]}}&nbsp;</td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock %}

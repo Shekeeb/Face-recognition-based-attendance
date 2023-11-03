@@ -1,0 +1,18 @@
+{% extends 'staffindex.html' %}
+{% block body %}
+<form action="viewfeedback" method="post">
+<table width="242" border="1">
+  <tr>
+    <td width="84">STUDENT</td>
+    <td width="387">FEEDBACK</td>
+  </tr>
+  {% for i in data %}
+  <tr>
+    <td>{{i[6]}}&nbsp;</td>
+    <td>{{i[3]}}&nbsp;</td>
+  </tr>
+  {% endfor %}
+</table>
+
+</form>
+{% endblock %}

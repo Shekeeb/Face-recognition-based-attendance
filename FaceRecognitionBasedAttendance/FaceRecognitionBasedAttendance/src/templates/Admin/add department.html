@@ -1,0 +1,21 @@
+{% extends 'adminindex.html' %}
+{% block body %}
+<form action="addcoursecode" method="post">
+<table width="200" border="1">
+  <tr>
+    <td width="55">Course</td>
+    <td width="129"><label>
+      <input type="text" name="textfield" required/>
+    </label></td>
+  </tr>
+  <tr>
+    <td colspan="2"><label>
+      <div align="center">
+        <input name="Submit" type="submit" value="Add" />
+        </div>
+    </label></td>
+    </tr>
+</table>
+
+</form>
+{% endblock %}
