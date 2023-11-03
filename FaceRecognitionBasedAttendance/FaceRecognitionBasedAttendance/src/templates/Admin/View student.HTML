@@ -1,0 +1,56 @@
+{% extends 'adminindex.html' %}
+{% block body %}
+<form action="liststudent" method="post">
+<table width="355" border="1">
+  <tr>
+    <td width="59">Course</td>
+    <td width="94"><select name="select">
+      {% for i in data1 %}
+      <option value="{{i[0]}}">{{i[1]}}</option>
+      {% endfor %}
+    </select>    </td>
+    <td width="180">Sem
+      <select name="select2">
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5</option>
+        <option>6</option>
+      </select>      </td>
+  </tr>
+  <tr>
+    <td colspan="3"><div align="center">
+      <input type="submit" name="Submit" value="LIST" />
+    </div></td>
+    </tr>
+</table>
+</form>
+<form action="addstudent" method="post">
+<table width="355" border="1">	
+  <tr>
+    <td>Student</td>
+    <td>Admission No: </td>
+    <td>&nbsp;</td>
+  </tr>
+  {% for i in data %}
+  <tr>
+    <td height="71">{{i[2]}}{{i[3]}}</td>
+    <td>{{i[4]}}</td>
+    <td><p align="right"><a href="editstudent?id={{i[1]}}">Edit</a></p>
+      <p align="right"><a href="deletestudent?id={{i[1]}}">Delete</a></p></td>
+  </tr>
+  {% endfor %}
+  <tr>
+    <td height="39" colspan="3"><div align="right">
+      <p align="center">
+        <input type="submit" name="Submit2" value="Add" />
+      </p>
+      </div></td>
+    </tr>
+</table>
+
+<p align="left">&nbsp;</p>
+<p>&nbsp;</p>
+</form>
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends 'staffindex.html' %}
+{% block body %}
+<form action="viewinternalmarksearch" method="post">
+<table width="499" height="143" border="1">
+  <tr>
+    <td width="79">COURSE</td>
+    <td width="80"><label>
+      <div align="center">
+        <select name="select">
+          {% for i in data %}
+        <option value="{{i[0]}}" {% if i[0]|string == c %} selected {% endif %}>{{i[1]}}</option>
+        {% endfor %}
+        </select>
+        </div>
+    </label></td>
+    <td width="41">SEM</td>
+    <td width="52"><div align="center">
+      <label>
+      <select name="select2">
+         <option {% if "1" == s %} selected {% endif %}>1</option>
+            <option {% if "2" == s %} selected {% endif %}>2</option>
+            <option {% if "3" == s %} selected {% endif %}>3</option>
+            <option {% if "4" == s %} selected {% endif %}>4</option>
+            <option {% if "5" == s %} selected {% endif %}>5</option>
+            <option {% if "6" == s %} selected {% endif %}>6</option>
+      </select>
+      </label>
+    </div></td>
+    <td width="82">SUBJECT</td>
+    <td width="125"><label>
+      <select name="select3">
+        {% for i in data1 %}
+            <option value="{{i[0]}}">{{i[3]}}</option>
+            {% endfor %}
+      </select>
+    </label></td>
+  </tr>
+  <tr>
+    <td colspan="6"><div align="center">
+      <label>
+      <input type="submit" name="Submit" value="Search" />
+      </label>
+    </div></td>
+  </tr>
+  <tr>
+    <td>Student</td>
+    <td>Admission</td>
+    <td colspan="4">Mark</td>
+  </tr>
+  {% for i in data3 %}
+  <tr>
+    <td>{{i[6]}}</td>
+    <td>{{i[8]}}</td>
+    <td>{{i[2]}}</td>
+  </tr>
+  {% endfor %}
+</table>
+</form>
+{% endblock %}

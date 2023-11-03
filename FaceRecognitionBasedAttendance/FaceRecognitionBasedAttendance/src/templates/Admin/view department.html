@@ -1,0 +1,27 @@
+{% extends 'adminindex.html' %}
+{% block body %}
+<form action="/adddepartment" method="post">
+<table width="247" border="1">
+  <tr>
+    <td width="75">C no </td>
+    <td width="86">Course</td>
+    <td width="64">&nbsp;</td>
+  </tr>
+  {% for i in data %}
+  <tr>
+    <td>{{i[0]}}</td>
+    <td>{{i[1]}}</td>
+    <td><a href="editdepartment?id={{i[0]}}">Edit</a>
+    <a href="deletedepartment?id={{i[0]}}">Delete</a></td>
+  </tr>
+  {% endfor %}
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td><input type="submit" value="Add New"/></td>
+  </tr>
+</table>
+
+</form>
+
+{% endblock %}

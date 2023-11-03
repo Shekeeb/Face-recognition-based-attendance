@@ -1,0 +1,30 @@
+{% extends 'staffindex.html' %}
+{% block body %}
+<form action="addsubject" method="post">
+<div align="center">
+  <table width="461" height="131" border="1">
+    <tr>
+      <td width="113" height="37">SUBJECT</td>
+        <td width="102">COURSE</td>
+        <td width="112">SEM</td>
+        <td width="106">&nbsp;</td>
+      </tr>
+    {% for i in data %}
+    <tr>
+      <td height="42">{{i[4]}}</td>
+        <td>{{i[0]}}</td>
+        <td>{{i[1]}}&nbsp;</td>
+        <td><p><a href="editsubject?id={{i[1]}}">Edit</a></p>
+        <p><a href="deletesubject?id={{i[1]}}">Delete</a></p></td>
+      </tr>
+    {% endfor %}
+    <tr>
+      <td height="42" colspan="4"><p align="center">
+        <input type="submit" name="Submit" value="Add" />
+        </p></td>
+      </tr>
+  </table>
+</div>
+<p align="center">&nbsp;</p>
+</form>
+{% endblock %}

@@ -1,0 +1,83 @@
+{% extends 'adminindex.html' %}
+{% block body %}
+<form action="updatestudent" method="post" enctype="multipart/form-data">
+<table width="310" border="1">
+  <tr>
+    <td width="92">First name</td>
+    <td width="202"><input type="text" name="textfield"  value="{{data[2]}}" required pattern="[A-Z a-z.]{3,25}"/></td>
+  </tr>
+  <tr>
+    <td>Last name </td>
+    <td><input type="text" name="textfield2" value="{{data[3]}}" required pattern="[A-Z a-z.]{3,25}"/></td>
+  </tr>
+  <tr>
+    <td>Admission No </td>
+    <td><input type="text" name="textfield3" value="{{data[4]}}" required/></td>
+  </tr>
+  <tr>
+    <td>Course</td>
+    <td><select name="select" value="{{data[5]}}" required>
+     {% for i in data1 %}
+      <option value="{{i[0]}}">{{i[1]}}</option>
+      {% endfor %}
+    </select></td>
+  </tr>
+  <tr>
+    <td>Sem</td>
+    <td><select name="select2" value="{{data[6]}}" required>
+      <option>1</option>
+      <option>2</option>
+      <option>3</option>
+      <option>5</option>
+      <option>5</option>
+      <option>6</option>
+    </select>    </td>
+  </tr>
+  <tr>
+    <td>DOB</td>
+    <td><input type="date" name="textfield12" value="{{data[8]}}" min="1990-01-01" max="2019-12-31" required /></td>
+  </tr>
+  <tr>
+    <td>House name </td>
+    <td><label>
+      <input type="text" name="textfield4" value="{{data[10]}}" required pattern="[A-Z a-z.]{3,25}"/>
+    </label></td>
+  </tr>
+  <tr>
+    <td>District</td>
+    <td><label>
+      <input type="text" name="textfield5" value="{{data[11]}}" required pattern="[A-Z a-z.]{3,25}"
+  </tr>
+  <tr>
+    <td>Place</td>
+    <td><label>
+      <input type="text" name="textfield6" value="{{data[12]}}" required pattern="[A-Z a-z.]{3,25}" />
+    </label></td>
+  </tr>
+  <tr>
+    <td>Post</td>
+    <td><label>
+      <input type="text" name="textfield7" value="{{data[13]}}" required pattern="[A-Z a-z.]{3,25}"/>
+    </label></td>
+  </tr>
+  <tr>
+    <td>Pin</td>
+    <td><label>
+      <input type="text" name="textfield8" value="{{data[14]}}" required pattern="[0-9]{6}"/>
+    </label></td>
+  </tr>
+  <tr>
+    <td>Contact No </td>
+    <td><label>
+      <input type="text" name="textfield9" value="{{data[15]}}" required pattern="[6789][0-9]{9}"/>
+    </label></td>
+  </tr>
+  <tr>
+    <td colspan="2"><div align="center">
+      <input type="submit" name="Submit" value="Update" />
+    </div></td>
+    </tr>
+</table>
+
+</form>
+{% endblock %}

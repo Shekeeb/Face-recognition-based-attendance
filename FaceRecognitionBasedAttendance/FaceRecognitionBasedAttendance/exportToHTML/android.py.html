@@ -1,0 +1,137 @@
+<html>
+<head>
+<title>android.py</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: #999999; font-weight: normal; font-style: normal; }
+.s0 { color: rgb(0,0,128); font-weight: bold; }
+.s1 { color: rgb(0,0,0); }
+.s2 { color: rgb(0,128,128); font-weight: bold; }
+.s3 { color: rgb(0,0,255); }
+.s4 { color: rgb(128,128,128); font-style: italic; }
+</style>
+</head>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+android.py</FONT>
+</center></TD></TR></TABLE>
+<pre>
+<span class="s0">from </span><span class="s1">flask </span><span class="s0">import </span><span class="s1">* 
+</span><span class="s0">from </span><span class="s1">werkzeug.utils </span><span class="s0">import </span><span class="s1">secure_filename 
+ 
+</span><span class="s0">from </span><span class="s1">src.dbconnection </span><span class="s0">import </span><span class="s1">* 
+ 
+app=Flask(__name__) 
+ 
+ 
+@app.route(</span><span class="s2">&quot;/logincode&quot;</span><span class="s1">,methods=[</span><span class="s2">'post'</span><span class="s1">]) 
+</span><span class="s0">def </span><span class="s1">logincode(): 
+    uname = request.form[</span><span class="s2">'uname'</span><span class="s1">] 
+    print(uname) 
+    password = request.form[</span><span class="s2">'password'</span><span class="s1">] 
+    print(password) 
+    q = </span><span class="s2">&quot;select * from login where username=%s and password=%s&quot;</span><span class="s1"> 
+    val = uname, password 
+    res = selectonenew(q, val) 
+    print(res) 
+ 
+ 
+    </span><span class="s0">if </span><span class="s1">res </span><span class="s0">is None</span><span class="s1">: 
+        </span><span class="s0">return </span><span class="s1">jsonify({</span><span class="s2">'task'</span><span class="s1">: </span><span class="s2">'invalid'</span><span class="s1">}) 
+    </span><span class="s0">else</span><span class="s1">: 
+        print(res[</span><span class="s3">3</span><span class="s1">]) 
+        </span><span class="s0">if </span><span class="s1">res[</span><span class="s3">3</span><span class="s1">]==</span><span class="s2">'parent'</span><span class="s1">: 
+            qry=</span><span class="s2">&quot;SELECT `student`.`login_id` FROM `student` JOIN `parent` ON `parent`.`admission_number`=`student`.`roll_no` WHERE `parent`.`login_id`=%s&quot;</span><span class="s1"> 
+            val=str(res[</span><span class="s3">0</span><span class="s1">]) 
+            ress=selectonenew(qry,val) 
+            </span><span class="s0">return </span><span class="s1">jsonify({</span><span class="s2">'task'</span><span class="s1">: </span><span class="s2">&quot;success&quot;</span><span class="s1">, </span><span class="s2">'type'</span><span class="s1">: res[</span><span class="s3">3</span><span class="s1">], </span><span class="s2">'id'</span><span class="s1">: ress[</span><span class="s3">0</span><span class="s1">]}) 
+ 
+        </span><span class="s0">return </span><span class="s1">jsonify({</span><span class="s2">'task'</span><span class="s1">:</span><span class="s2">&quot;success&quot;</span><span class="s1">,</span><span class="s2">'type'</span><span class="s1">: res[</span><span class="s3">3</span><span class="s1">],</span><span class="s2">'id'</span><span class="s1">:res[</span><span class="s3">0</span><span class="s1">]}) 
+ 
+ 
+@app.route(</span><span class="s2">&quot;/viewattendance&quot;</span><span class="s1">,methods=[</span><span class="s2">'post'</span><span class="s1">]) 
+</span><span class="s0">def </span><span class="s1">viewattendance(): 
+    lid=request.form[</span><span class="s2">'lid'</span><span class="s1">] 
+    print(lid) 
+ 
+    </span><span class="s4"># qry1=&quot;SELECT `parent`.`admission_number` FROM `parent` WHERE `parent`.`login_id`=%s&quot;</span><span class="s1"> 
+    </span><span class="s4"># val=str(lid)</span><span class="s1"> 
+    </span><span class="s4"># res =selectonenew(qry1,val)</span><span class="s1"> 
+    </span><span class="s4"># sid=str(res[0])</span><span class="s1"> 
+    </span><span class="s4"># print(sid)</span><span class="s1"> 
+ 
+    qry=</span><span class="s2">&quot;SELECT `student`.`first_name`,`last_name`,COUNT(`attendance`.id) as twd,SUM(`attendance`.`attendance`) as tpd,(SUM(`attendance`.`attendance`)/COUNT(`attendance`.id))*100 as p FROM `student`  JOIN `attendance` ON `student`.`login_id`=`attendance`.`stud_id` WHERE  `student`.`login_id`=%s&quot;</span><span class="s1"> 
+    print(qry) 
+    val=(lid) 
+    res=androidselectall(qry,val) 
+    print(res) 
+ 
+    </span><span class="s0">return </span><span class="s1">jsonify(res) 
+ 
+@app.route(</span><span class="s2">&quot;/viewmark&quot;</span><span class="s1">,methods=[</span><span class="s2">'post'</span><span class="s1">]) 
+</span><span class="s0">def </span><span class="s1">viewmark(): 
+    lid=request.form[</span><span class="s2">'lid'</span><span class="s1">] 
+    qry=</span><span class="s2">&quot;SELECT `mark`.`mark`,`subject`.`subject` FROM `mark` JOIN `subject` ON (`mark`.`sub_id`=`subject`.`sub_id`)WHERE `mark`.`stud_id`=%s&quot;</span><span class="s1"> 
+    val=(lid) 
+    res = androidselectall(qry,val) 
+    </span><span class="s0">return </span><span class="s1">jsonify(res) 
+@app.route(</span><span class="s2">&quot;/viewmarkparent&quot;</span><span class="s1">,methods=[</span><span class="s2">'post'</span><span class="s1">]) 
+</span><span class="s0">def </span><span class="s1">viewmarkparent(): 
+    lid=request.form[</span><span class="s2">'lid'</span><span class="s1">] 
+    qry=</span><span class="s2">&quot;SELECT `mark`.`mark`,`subject`.`subject` FROM `mark` JOIN `subject` ON (`mark`.`sub_id`=`subject`.`sub_id`)WHERE `mark`.`stud_id`=%s&quot;</span><span class="s1"> 
+    val=(lid) 
+    res = androidselectall(qry,val) 
+    </span><span class="s0">return </span><span class="s1">jsonify(res) 
+@app.route(</span><span class="s2">&quot;/addfeedback&quot;</span><span class="s1">,methods=[</span><span class="s2">'post'</span><span class="s1">]) 
+</span><span class="s0">def </span><span class="s1">addfeedback(): 
+    print(request.form) 
+    stud_id=request.form[</span><span class="s2">'lid'</span><span class="s1">] 
+    feedback=request.form[</span><span class="s2">'feedback'</span><span class="s1">] 
+    qry=</span><span class="s2">&quot;insert into feedback values(null,%s,curdate(),%s)&quot;</span><span class="s1"> 
+    val=(stud_id,feedback) 
+    iud(qry,val) 
+    </span><span class="s0">return </span><span class="s1">jsonify({</span><span class="s2">'task'</span><span class="s1">: </span><span class="s2">'success'</span><span class="s1">}) 
+ 
+</span><span class="s4"># @app.route(&quot;/performanceprediction&quot;,methods=['post'])</span><span class="s1"> 
+</span><span class="s4"># def performanceprediction():</span><span class="s1"> 
+</span><span class="s4">#</span><span class="s1"> 
+</span><span class="s4">#     qry=&quot;&quot;</span><span class="s1"> 
+</span><span class="s4">#     val=(lid)</span><span class="s1"> 
+</span><span class="s4">#     res=androidselectall(qry,val)</span><span class="s1"> 
+</span><span class="s4">#     return jsonify(res)</span><span class="s1"> 
+ 
+@app.route(</span><span class="s2">&quot;/addparent&quot;</span><span class="s1">,methods=[</span><span class="s2">'post'</span><span class="s1">]) 
+</span><span class="s0">def </span><span class="s1">addparent(): 
+    first_name=request.form[</span><span class="s2">'fname'</span><span class="s1">] 
+    last_name=request.form[</span><span class="s2">'lname'</span><span class="s1">] 
+    admission_number=request.form[</span><span class="s2">'admno'</span><span class="s1">] 
+    contact_no=request.form[</span><span class="s2">'contactno'</span><span class="s1">] 
+    username=request.form[</span><span class="s2">'username'</span><span class="s1">] 
+    password=request.form[</span><span class="s2">'password'</span><span class="s1">] 
+    qry = </span><span class="s2">&quot;insert into login values(null,%s,%s,'parent')&quot;</span><span class="s1"> 
+    value = (username, password) 
+    lid = iud(qry, value) 
+    qry1 = </span><span class="s2">&quot;insert into parent values(null,%s,%s,%s,%s,%s)&quot;</span><span class="s1"> 
+    val = (str(lid), first_name,last_name,admission_number,contact_no) 
+    iud(qry1, val) 
+    </span><span class="s0">return </span><span class="s1">jsonify({</span><span class="s2">'task'</span><span class="s1">: </span><span class="s2">'success'</span><span class="s1">}) 
+ 
+@app.route(</span><span class="s2">&quot;/viewremarks&quot;</span><span class="s1">,methods=[</span><span class="s2">'post'</span><span class="s1">]) 
+</span><span class="s0">def </span><span class="s1">viewremarks(): 
+    lid = request.form[</span><span class="s2">'lid'</span><span class="s1">] 
+    print(lid) 
+    qry1 = </span><span class="s2">&quot;SELECT `student`.`login_id` FROM `student` JOIN `parent` ON `parent`.`admission_number`=`student`.`roll_no` WHERE `student`.`login_id`=%s&quot;</span><span class="s1"> 
+    val1=str(lid) 
+    ress = selectonenew(qry1, val1) 
+    sid=ress[</span><span class="s3">0</span><span class="s1">] 
+    qry = </span><span class="s2">&quot;SELECT * FROM remark WHERE `stud_id`=%s&quot;</span><span class="s1"> 
+    val = (str(sid)) 
+    res = androidselectall(qry, val) 
+    print(res) 
+    </span><span class="s0">return </span><span class="s1">jsonify(res) 
+ 
+app.run(host=</span><span class="s2">&quot;0.0.0.0&quot;</span><span class="s1">,port=</span><span class="s3">5000</span><span class="s1">)</span></pre>
+</body>
+</html>
